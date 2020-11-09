@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
+import { User } from '@core/models/user';
 import { Select } from '@ngxs/store';
+import { UserState } from '@store/state/user.state';
 import { Observable } from 'rxjs';
-import { User } from 'src/app/store/user/model';
-import { UserState } from 'src/app/store/user/user.state';
 
 @Component({
   templateUrl: './details.component.html',
