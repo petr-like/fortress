@@ -1,0 +1,9 @@
+
+<button class="login__auth" mat-raised-button (click)="authenticate()" *ngIf="gapiSetup else loading" >
+  <img src="/assets/img/google_logo.webp" alt="">
+  <span>Sign In</span>
+</button>
+
+<ng-template #loading>
+  <mat-spinner></mat-spinner>
+</ng-template>
