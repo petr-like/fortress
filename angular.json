@@ -30,7 +30,6 @@
             "styles": [
               "src/styles.sass"
             ],
-
             "stylePreprocessorOptions": {
               "includePaths": [
                 "src/assets/sass"
@@ -98,10 +97,13 @@
               "src/assets"
             ],
             "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.sass"
             ],
-            "scripts": []
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/assets/sass"
+              ]
+            }
           }
         },
         "lint": {

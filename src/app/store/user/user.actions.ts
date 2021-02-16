@@ -6,6 +6,5 @@ export class SetUser {
 }
 export class RemoveUser {
   static readonly type = '[User] Remove';
-  constructor(public user: User) {}
 }
 

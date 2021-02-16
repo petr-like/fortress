@@ -4,8 +4,10 @@
   "compilerOptions": {
     "outDir": "./out-tsc/spec",
     "types": [
+      "gapi",
+      "gapi.auth2",
       "jasmine"
-    ]
+    ],
   },
   "files": [
     "src/test.ts",
