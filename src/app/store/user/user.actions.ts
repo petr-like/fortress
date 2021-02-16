@@ -1,8 +1,5 @@
-import { User } from '@core/models/user';
-
-export class SetUser {
-  static readonly type = '[User] Set';
-  constructor(public user: User) {}
+export class LoginUser {
+  static readonly type = '[User] Login';
 }
 export class RemoveUser {
   static readonly type = '[User] Remove';

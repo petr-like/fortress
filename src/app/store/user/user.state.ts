@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { Action, State, StateContext } from '@ngxs/store';
 
 // Models
 import { User } from '@core/models/user';
 
 // Actions
-import { RemoveUser, SetUser } from './user.actions';
-
+import { LoginUser, RemoveUser } from './user.actions';
+import { GapiService } from '@core/services/gapi/gapi.service';
 
 @State<User>({
   name: 'user',
@@ -15,8 +15,14 @@ import { RemoveUser, SetUser } from './user.actions';
 
 @Injectable()
 export class UserState {
-  @Action(SetUser)
-  setUser({ setState }: StateContext<User>, { user }: SetUser): void {
+
+  constructor(
+    private gapi: GapiService,
+  ) {}
+
+  @Action(LoginUser)
+  async loginUser({ setState }: StateContext<User>): Promise<void> {
+    const user = await this.gapi.getUser();
     setState(user);
   }
 

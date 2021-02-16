@@ -33,20 +33,15 @@ export class GapiService {
   }
 
   async getUser(): Promise<User> {
-    try {
-      const user = await this.authInstance.signIn();
-      const profile = user.getBasicProfile();
+    const user = await this.authInstance.signIn();
+    const profile = user.getBasicProfile();
 
-      return {
-        id: profile.getId(),
-        givenName: profile.getGivenName(),
-        familyName: profile.getFamilyName(),
-        imageUrl: profile.getImageUrl(),
-        email: profile.getEmail(),
-      };
-
-    } catch (error) {
-      throw error;
-    }
+    return {
+      id: profile.getId(),
+      givenName: profile.getGivenName(),
+      familyName: profile.getFamilyName(),
+      imageUrl: profile.getImageUrl(),
+      email: profile.getEmail(),
+    };
   }
 }

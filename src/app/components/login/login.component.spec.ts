@@ -6,7 +6,7 @@ import { GapiService } from '@core/services/gapi/gapi.service';
 import { LoginComponent } from './login.component';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { NgxsModule, Store } from '@ngxs/store';
-import { SetUser, UserState } from '@store/user';
+import { LoginUser, UserState } from '@store/user';
 import { RouterTestingModule } from '@angular/router/testing';
 import { User } from '@core/models/user';
 
@@ -25,6 +25,16 @@ describe('LoginComponent', () => {
   let router: Router;
   let gapiService: GapiService;
 
+  window.gapi = {
+    load(): void {
+      return null;
+    },
+    auth: null,
+    client: null,
+    auth2: null,
+    signin2: null,
+  };
+
   const gapiServiceStub = {
     getUser: () => Promise.resolve(userStub),
   };
@@ -33,26 +43,19 @@ describe('LoginComponent', () => {
     navigate: jasmine.createSpy('navigate'),
   };
 
-
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         NgxsModule.forRoot([UserState]),
         RouterTestingModule.withRoutes([]),
       ],
-      declarations: [
-        LoginComponent,
-      ],
+      declarations: [LoginComponent],
       providers: [
         { provide: Router, useValue: routerSpy },
         { provide: GapiService, useValue: gapiServiceStub },
       ],
-      schemas: [
-        NO_ERRORS_SCHEMA,
-        CUSTOM_ELEMENTS_SCHEMA,
-      ]
-    })
-    .compileComponents();
+      schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
+    }).compileComponents();
 
     router = TestBed.inject(Router);
     store = TestBed.inject(Store);
@@ -70,16 +73,16 @@ describe('LoginComponent', () => {
   });
 
   it('should call dispatch with user response', async () => {
-    const spy = spyOn(store, 'dispatch');
+    const spy = spyOn(store, 'dispatch').and.callThrough();
     await component.authenticate();
-    expect(spy).toHaveBeenCalledWith(new SetUser(userStub));
+    expect(spy).toHaveBeenCalledWith(new LoginUser());
   });
 
   it('should put to store user', async () => {
-    const userBefore = store.selectSnapshot(state => state.user);
+    const userBefore = store.selectSnapshot((state) => state.user);
     expect(userBefore).toBe(null);
     await component.authenticate();
-    const user = store.selectSnapshot(state => state.user);
+    const user = store.selectSnapshot((state) => state.user);
     expect(user).toEqual(userStub);
   });
 

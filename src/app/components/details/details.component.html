@@ -1,5 +1,4 @@
 <button mat-raised-button color="primary" (click)="goBack()">Go to Home</button>
-<pre>{{ (user$ | async) | json }}</pre>
 <div class="details__container mat-typography" *ngIf="user$ | async as user">
   <img [src]="user.imageUrl" class="details__avatar" />
   <div class="details__id">

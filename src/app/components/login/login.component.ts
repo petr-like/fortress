@@ -3,10 +3,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 
 // Store
-import { SetUser } from '@store/user';
-
-// Services
-import { GapiService } from '@core/services/gapi/gapi.service';
+import { LoginUser } from '@store/user';
 
 @Component({
   templateUrl: './login.component.html',
@@ -17,14 +14,14 @@ export class LoginComponent {
   constructor(
     private store: Store,
     private router: Router,
-    private gapiService: GapiService,
   ) {}
 
   async authenticate(): Promise<void> {
     try {
-      const user = await this.gapiService.getUser();
-      await this.store.dispatch(new SetUser(user)).toPromise();
+      await this.store.dispatch(new LoginUser()).toPromise();
       this.router.navigate(['/details']);
-    } catch (e) {}
+    } catch (e) {
+      console.warn(e);
+    }
   }
 }
